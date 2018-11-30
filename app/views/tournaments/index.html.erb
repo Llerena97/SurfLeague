@@ -1,0 +1,11 @@
+<h4>Tournaments</h4>
+<%= link_to "New Tournament", new_tournament_path %>
+<% @tournaments.each do |tournament| %>
+  <div style="width: 25%; border: 1px solid black;">
+    <%= tournament.name %> <br>
+    <%= tournament.place %> <br>
+    <%= tournament.initial_date %> <br>
+    <%= tournament.finish_date %> <br>
+    <%= tournament.categories.map(&:name).to_s %>  
+  </div>
+<% end %>

@@ -1,0 +1,7 @@
+<div class="nested-fields">
+  <%= f.label :category_id, "Category: " %> 
+  <%= f.select :category_id, Category.all.collect { |category| [ category.name, category.id ] }, include_blank: true %><br>
+  <%= f.label :participants_per_group, "Participants Per Group: " %>
+  <%= f.number_field :participants_per_group, max: 9 %><br> 
+  <%= link_to_remove_association "remove", f %>
+</div>

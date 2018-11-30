@@ -1,0 +1,20 @@
+<%= form_for(@tournament) do |f| %>
+  <% @tournament.errors.full_messages.each do |message| %>
+    <div style="background-color: red; color: white;"><%= message %></div>
+  <% end %>
+  <%= f.label :name, "Tournament Name: " %> 
+  <%= f.text_field :name, placeholder: "Name..." %><br>
+  <%= f.label :place, "Place: " %>
+  <%= f.text_field :place, placeholder: "Place..." %><br>
+  <%= f.label :initial_date, "Initial Date: " %>
+  <%= f.date_field :initial_date, min: Date.today %><br>
+  <%= f.label :finish_date, "Finish Date: " %>
+  <%= f.date_field :finish_date %><br>
+  <%= link_to_add_association 'Add category', f, :tournament_categories, :"data-association-insertion-node" => '#tournament_categories' %>
+  <div id="tournament_categories">
+    <%= f.fields_for :tournament_categories do |t_c| %>
+      <%= render 'tournament_category_fields', f: t_c %> <br>
+    <% end %>
+  </div>
+  <%= f.submit %>
+<% end %>
