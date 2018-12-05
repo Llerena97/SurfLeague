@@ -10,13 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_30_161426) do
+ActiveRecord::Schema.define(version: 2018_12_03_145825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "participant_categories", force: :cascade do |t|
+    t.bigint "participant_id"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_participant_categories_on_category_id"
+    t.index ["participant_id"], name: "index_participant_categories_on_participant_id"
+  end
+
+  create_table "participants", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "gender"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -40,6 +57,8 @@ ActiveRecord::Schema.define(version: 2018_11_30_161426) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "participant_categories", "categories"
+  add_foreign_key "participant_categories", "participants"
   add_foreign_key "tournament_categories", "categories"
   add_foreign_key "tournament_categories", "tournaments"
 end
