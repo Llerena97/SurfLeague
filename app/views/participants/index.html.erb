@@ -1,20 +1,23 @@
 <h4>Participants</h4>
 <%= link_to "New Participant", new_participant_path, class: "btn btn-success" %>
 
-<div class="row">
-  <div class="col-xs-6">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Gender</th>
+      <th>Categories</th>
+      <th colspan="2">Options</th>
+    </tr>
+  </thead>
+  <tbody>
     <% @participants.each do |participant| %>
-      <div class="panel panel-default w-25">
-        <div class="panel-heading"><%= participant.first_name %> <%= participant.last_name %></div>
-        <div class="panel-body">
-          <h6>Gender: <%= participant.gender %></h6>
-          <h5>Categories: <%= participant.categories.map(&:name) %></h5>
-        </div>
-        <div class="panel-footer">
-          <%= link_to "Edit participant", edit_participant_path(participant), class: "btn btn-info btn-xs" %>
-          <%= link_to "Delete participant", participant , method: :delete, data: { confirm: "Are you sure? "}, class: "btn btn-danger btn-xs" %>
-        </div>
-      </div>
+    <tr>
+      <td><%= participant.first_name %> <%= participant.last_name %></td>
+      <td><%= participant.gender %></td>
+      <td><%= participant.categories.map(&:name) %></td>
+      <td><%= link_to "Edit participant", edit_participant_path(participant), class: "btn btn-info btn-xs" %> <%= link_to "Delete participant", participant , method: :delete, data: { confirm: "Are you sure? "}, class: "btn btn-danger btn-xs" %></td>
+    </tr>
     <% end %>
-  </div>
-</div>
+  </tbody>
+</table>

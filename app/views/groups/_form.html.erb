@@ -1,0 +1,5 @@
+<%= form_for(@group) do |f| %>
+  <%= f.text_field :tournament_id, value: @tournament.id %>
+  <%= f.text_field :category_id, @category.id  %>
+  <%= f.submit %>
+<% end %>

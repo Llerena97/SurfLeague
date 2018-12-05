@@ -6,9 +6,9 @@ class Tournament < ApplicationRecord
 
   validate :finish_after_initial, if: :date_exists?
 
-
   has_many :tournament_categories, dependent: :delete_all
   has_many :categories, through: :tournament_categories
+  has_many :groups
 
   accepts_nested_attributes_for :tournament_categories, reject_if: :all_blank, allow_destroy: true
 
