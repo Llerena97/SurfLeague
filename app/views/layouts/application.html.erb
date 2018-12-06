@@ -10,6 +10,12 @@
   </head>
 
   <body>
+    <div>
+      <nav>
+        <li style="display: inline-block;"><%= link_to "Tournaments", root_path %></li>
+        <li style="display: inline-block;"><%= link_to "Participants", participants_path %></li>
+      </nav>
+    </div>
     <%= yield %>
   </body>
 </html>
