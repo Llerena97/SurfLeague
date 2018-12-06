@@ -1,11 +1,19 @@
 <h4>Tournaments</h4>
-<%= link_to "New Tournament", new_tournament_path %>
-<% @tournaments.each do |tournament| %>
-  <div style="width: 25%; border: 1px solid black;">
-    <%= tournament.name %> <br>
-    <%= tournament.place %> <br>
-    <%= tournament.initial_date %> <br>
-    <%= tournament.finish_date %> <br>
-    <%= tournament.categories.map(&:name).to_s %>  
+<%= link_to "New Tournament", new_tournament_path, class: "btn btn-success" %>
+
+<div class="row">
+  <div class="col-xs-6">
+    <% @tournaments.each do |tournament| %>
+      <div class="panel panel-default w-25">
+        <div class="panel-heading"><%= tournament.name %></div>
+        <div class="panel-body">
+          <h5>Place: <%= tournament.place %></h5>
+          <h6>Categories: <%= tournament.categories.map(&:name).to_s %></h6>
+        </div>
+        <div class="panel-footer">
+          <h6>Date: <%= tournament.initial_date %> / <%= tournament.finish_date %></h6>  
+        </div>
+      </div>
+    <% end %>    
   </div>
-<% end %>
+</div>

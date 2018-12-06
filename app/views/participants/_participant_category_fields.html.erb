@@ -1,6 +1,6 @@
 <div class="nested-fields">
   <%= f.label :category_id, "Category: " %> 
-  <%= f.select :category_id, Category.all.collect { |category| [ category.name, category.id ] }, include_blank: true %><br>
+  <%= f.select :category_id, Category.all.collect { |category| [ category.name, category.id ] }, { include_blank: true }, class: "form-control" %><br>
   <%= f.hidden_field :participant_id, value: @participant.id %>
-  <%= link_to_remove_association "remove", f %>
+  <%= link_to_remove_association "remove", f, class: "btn btn-danger btn-xs" %>
 </div>

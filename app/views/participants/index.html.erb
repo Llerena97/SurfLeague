@@ -1,11 +1,20 @@
-<h3>Participants</h3>
-<%= link_to "New Participant", new_participant_path %>
-<% @participants.each do |participant| %>
-  <div style="border: 1px solid black; width: 25%;">
-    <h4><%= participant.first_name %> <%= participant.last_name %></h4>
-    <p><%= participant.gender %></p>
-    <p><%= participant.categories.map(&:name) %></p>
-    <%= link_to "Edit participant", edit_participant_path(participant) %>
-    <%= link_to "Delete participant", participant , method: :delete, data: { confirm: "Are you sure? "} %>
+<h4>Participants</h4>
+<%= link_to "New Participant", new_participant_path, class: "btn btn-success" %>
+
+<div class="row">
+  <div class="col-xs-6">
+    <% @participants.each do |participant| %>
+      <div class="panel panel-default w-25">
+        <div class="panel-heading"><%= participant.first_name %> <%= participant.last_name %></div>
+        <div class="panel-body">
+          <h6>Gender: <%= participant.gender %></h6>
+          <h5>Categories: <%= participant.categories.map(&:name) %></h5>
+        </div>
+        <div class="panel-footer">
+          <%= link_to "Edit participant", edit_participant_path(participant), class: "btn btn-info btn-xs" %>
+          <%= link_to "Delete participant", participant , method: :delete, data: { confirm: "Are you sure? "}, class: "btn btn-danger btn-xs" %>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

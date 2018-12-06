@@ -1,18 +1,29 @@
 <%= form_for(@participant) do |f| %>
   <% @participant.errors.full_messages.each do |message| %>
-    <div style="background-color: red; color: white;"><%= message %></div>
+    <div class="alert alert-danger alert-dismissible w-75" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <%= message %>
+    </div>
   <% end %>
-  <%= f.label :first_name, "First Name: " %>
-  <%= f.text_field :first_name, placeholder: "First Name..." %>
-  <%= f.label :last_name, "Last Name: " %>
-  <%= f.text_field :last_name, placeholder: "Last Name..." %>
-  <%= f.label :gender, "Gender: " %>
-  <%= f.select :gender, options_for_select({ "Male" => "M", "Female" => "F"}, @participant.gender), include_blank: true %>
-  <%= link_to_add_association 'Add category', f, :participant_categories, :"data-association-insertion-node" => '#participant_categories' %>
-  <div id="participant_categories">
-    <%= f.fields_for :participant_categories do |t_c| %>
-      <%= render 'participant_category_fields', f: t_c %> <br>
-    <% end %>
+  <div class="row">
+    <div class="col-xs-4">
+      <div class="form-group">
+        <%= f.label :first_name, "First Name: " %>
+        <%= f.text_field :first_name, placeholder: "First Name...", class: "form-control" %>
+        <%= f.label :last_name, "Last Name: " %>
+        <%= f.text_field :last_name, placeholder: "Last Name...", class: "form-control" %>
+        <%= f.label :gender, "Gender: " %>
+        <%= f.select :gender, options_for_select({ "Male" => "M", "Female" => "F"}, @participant.gender), {include_blank: true}, class: "form-control" %>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <%= link_to_add_association 'Add category', f, :participant_categories, :"data-association-insertion-node" => '#participant_categories', class: "btn btn-default float-right" %>
+      <div id="participant_categories">
+        <%= f.fields_for :participant_categories do |t_c| %>
+          <%= render 'participant_category_fields', f: t_c %> <br>
+        <% end %>
+      </div>
+    </div>
   </div>
-  <%= f.submit %>
+  <%= f.submit "Create Participant", class: "btn btn-success" %>
 <% end %>
