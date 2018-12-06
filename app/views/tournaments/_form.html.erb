@@ -1,20 +1,31 @@
 <%= form_for(@tournament) do |f| %>
   <% @tournament.errors.full_messages.each do |message| %>
-    <div style="background-color: red; color: white;"><%= message %></div>
+    <div class="alert alert-danger alert-dismissible w-75" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <%= message %>
+    </div>
   <% end %>
-  <%= f.label :name, "Tournament Name: " %> 
-  <%= f.text_field :name, placeholder: "Name..." %><br>
-  <%= f.label :place, "Place: " %>
-  <%= f.text_field :place, placeholder: "Place..." %><br>
-  <%= f.label :initial_date, "Initial Date: " %>
-  <%= f.date_field :initial_date, min: Date.today %><br>
-  <%= f.label :finish_date, "Finish Date: " %>
-  <%= f.date_field :finish_date %><br>
-  <%= link_to_add_association 'Add category', f, :tournament_categories, :"data-association-insertion-node" => '#tournament_categories' %>
-  <div id="tournament_categories">
-    <%= f.fields_for :tournament_categories do |t_c| %>
-      <%= render 'tournament_category_fields', f: t_c %> <br>
-    <% end %>
-  </div>
-  <%= f.submit %>
+  <div class="row">
+    <div class="col-xs-4">
+      <div class="form-group">
+        <%= f.label :name, "Tournament Name: " %> 
+        <%= f.text_field :name, placeholder: "Name...",class: "form-control w-10" %><br>
+        <%= f.label :place, "Place: " %>
+        <%= f.text_field :place, placeholder: "Place...",class: "form-control" %><br>  
+        <%= f.label :initial_date, "Initial Date: " %>
+        <%= f.date_field :initial_date, min: Date.today,class: "form-control" %><br>
+        <%= f.label :finish_date, "Finish Date: " %>
+        <%= f.date_field :finish_date,class: "form-control" %><br>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <%= link_to_add_association 'Add category', f, :tournament_categories, :"data-association-insertion-node" => '#tournament_categories', class: "btn btn-default float-right" %>
+      <div id="tournament_categories">
+        <%= f.fields_for :tournament_categories do |t_c| %>
+          <%= render 'tournament_category_fields', f: t_c %> <br>
+        <% end %>
+      </div>
+    </div>
+  </div>    
+  <%= f.submit "Create Tournament", class: "btn btn-success" %>
 <% end %>
