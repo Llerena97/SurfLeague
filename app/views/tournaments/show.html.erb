@@ -1,10 +1,10 @@
 <h2><%= @tournament.name %></h2>
 <%= link_to "Edit", edit_tournament_path, class: "btn btn-success btn-xs" %>
-
+<%= link_to "Draw", new_tournament_group_path(@tournament), class: "btn btn-success btn-xs" %>
 <div class="row">
-  <% @tournament.groups.group_by { |t| t.category }.each do |category, groups| %>
+  <% @tournament.groups.group_by { |t| t.category_ids }.each do |category, groups| %>
     <div class="col-xs-4">
-      <h4>Category: <%= category.name %></h4>
+      <h4>Category: <%= category %></h4>
       <% groups.each do |group| %>
        <small>phase: <%= group.phase %></small>
         <div class="panel panel-default w-25">

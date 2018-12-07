@@ -6,5 +6,8 @@ class Category < ApplicationRecord
 
   has_many :category_groups
   has_many :groups, through: :category_groups
+
+  has_many :participant_categories
+  has_many :participants, through: :participant_categories
   
 end

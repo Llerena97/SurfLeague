@@ -1,5 +1,31 @@
-<%= form_for(@group) do |f| %>
-  <%= f.text_field :tournament_id, value: @tournament.id %>
-  <%= f.text_field :category_id, @category.id  %>
-  <%= f.submit %>
+<%= form_for(@group, url: tournament_groups_path) do |f| %>
+  <% @group.errors.full_messages.each do |message| %>
+    <div class="alert alert-danger alert-dismissible w-75" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <%= message %>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-xs-4">
+      <p>Group</p>
+      <%= f.text_field :name, value: "group_name" %>
+      <%= f.collection_check_boxes(:participant_ids, @tournament.categories.first.participants.all, :id, :first_name) %>
+      <%= f.fields_for :group_participants, @group.group_participants.build do |g_p| %>
+        <h5>Participants</h5>
+        
+        <%= g_p.hidden_field :group_id, value: @group.id %>
+      <% end %>
+    </div>
+    <div class="col-xs-4">
+      <div class="form-group">
+        <h3>CategoryGroup</h3>
+        <%= f.fields_for :category_groups, @group.category_groups.build do |c_g| %>
+          <%= c_g.label :category_id, "Category: " %>
+          <%= c_g.select :category_id, @tournament.categories.all.collect { |category| [ category.name, category.id ] }, { include_blank: true }, class: "form-control" %>
+          <%= c_g.hidden_field :group_id, value: @group.id, class: "form-control" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <%= f.submit "Create Group", class: "btn btn-success" %>
 <% end %>

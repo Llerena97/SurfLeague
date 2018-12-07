@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_04_223946) do
+ActiveRecord::Schema.define(version: 2018_12_07_201424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 2018_12_04_223946) do
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_category_groups_on_category_id"
     t.index ["group_id"], name: "index_category_groups_on_group_id"
-    t.index ["tournament_id"], name: "index_category_groups_on_tournament_id"
   end
 
   create_table "group_participants", force: :cascade do |t|
@@ -42,13 +41,11 @@ ActiveRecord::Schema.define(version: 2018_12_04_223946) do
   end
 
   create_table "groups", force: :cascade do |t|
-    t.bigint "category_id"
     t.bigint "tournament_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name", default: "Group"
     t.integer "phase", default: 1
-    t.index ["category_id"], name: "index_groups_on_category_id"
     t.index ["tournament_id"], name: "index_groups_on_tournament_id"
   end
 
@@ -93,7 +90,6 @@ ActiveRecord::Schema.define(version: 2018_12_04_223946) do
   add_foreign_key "category_groups", "tournaments"
   add_foreign_key "group_participants", "groups"
   add_foreign_key "group_participants", "participants"
-  add_foreign_key "groups", "categories"
   add_foreign_key "groups", "tournaments"
   add_foreign_key "participant_categories", "categories"
   add_foreign_key "participant_categories", "participants"
