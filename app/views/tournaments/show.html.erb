@@ -2,7 +2,7 @@
 <%= link_to "Edit", edit_tournament_path, class: "btn btn-success btn-xs" %>
 <%= link_to "Draw", new_tournament_group_path(@tournament), class: "btn btn-success btn-xs" %>
 <div class="row">
-  <% @tournament.groups.group_by { |t| t.category_ids }.each do |category, groups| %>
+  <% @tournament.groups.group_by { |t| t.category.name }.each do |category, groups| %>
     <div class="col-xs-4">
       <h4>Category: <%= category %></h4>
       <% groups.each do |group| %>
