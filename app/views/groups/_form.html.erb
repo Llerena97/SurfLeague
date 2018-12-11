@@ -1,0 +1,30 @@
+<%= form_for(@group, url: tournament_groups_path) do |f| %>
+  <% @group.errors.full_messages.each do |message| %>
+    <div class="alert alert-danger alert-dismissible w-75" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <%= message %>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-xs-4">
+      <p>Group</p>
+      <%= f.label :name, "Group Name: " %>
+      <%= f.text_field :name, placeholder: "Group Name", class: "form-control" %>
+      <%= f.label :category_id, "Category: " %>
+      <%= f.select :category_id, @tournament.categories.all.collect { |category| [ category.name, category.id ] }, { include_blank: "Select a category...", required: true }, class: "form-control" %>
+      <h4>Participants</h4>
+      <ul>
+        <%= f.collection_check_boxes(:participant_ids, @participants, :id, :first_name) do |participant| %>
+        <li style="list-style: none;">
+          <%= participant.label %>
+          <%= participant.check_box %>
+        </li>
+        <% end %>
+      </ul>
+      <%= f.fields_for :group_participants, @group.group_participants.build do |g_p| %>
+        <%= g_p.hidden_field :group_id, value: @group.id %>
+      <% end %>
+    </div>
+  </div>
+  <%= f.submit "Create Group", class: "btn btn-success" %>
+<% end %>

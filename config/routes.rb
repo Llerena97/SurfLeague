@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :tournaments
+  resources :tournaments do
+    resources :groups, only: [:new, :create]
+  end
   resources :categories
   resources :participants
 

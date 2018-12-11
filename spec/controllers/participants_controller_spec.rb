@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ParticipantsController, type: :controller do
+  let!(:category){ create(:category) }
 
   describe 'GET #new' do
     it "assigns a new participant to @participant" do
@@ -16,13 +17,23 @@ RSpec.describe ParticipantsController, type: :controller do
 
   describe 'GET #edit' do
     it "assigns the requested participant to @participant" do
-      participant = create(:participant)
+      participant = Participant.create(
+        first_name: "Roger",
+        last_name: "Federer",
+        gender: "M",
+        participant_categories_attributes: [{category_id: category.id}]
+        )
       get :edit, params: { id: participant }
       expect(assigns(:participant)).to eq(participant)
     end
 
     it "render the :edit template" do
-      participant = create(:participant)
+      participant = Participant.create(
+        first_name: "Roger",
+        last_name: "Federer",
+        gender: "M",
+        participant_categories_attributes: [{category_id: category.id}]
+        )
       get :edit, params: { id: participant }
       expect(response).to render_template :edit
     end
@@ -32,12 +43,12 @@ RSpec.describe ParticipantsController, type: :controller do
     context "with valid attributes" do
       it "saves new participant" do
         expect{
-          post :create, params: { participant: attributes_for(:participant) }
+          post :create, params: { participant: attributes_for(:participant, participant_categories_attributes: [{category_id: category.id}]) }
         }.to change(Participant, :count).by(1)
       end
 
-      it "redirects to root_path" do
-        post :create, params: { participant: attributes_for(:participant) }
+      it "redirects to participants_path" do
+        post :create, params: { participant: attributes_for(:participant, participant_categories_attributes: [{category_id: category.id}]) }
         expect(response).to redirect_to participants_path
       end
     end
@@ -57,10 +68,12 @@ RSpec.describe ParticipantsController, type: :controller do
   end
 
   describe "PATCH #update" do
-    before :each do
-      @participant = create(:participant,
-        first_name: "Maria",
-        gender: "F"
+    before do
+      @participant = Participant.create(
+        first_name: "Roger",
+        last_name: "Federer",
+        gender: "M",
+        participant_categories_attributes: [{category_id: category.id}]
         )
     end
 
@@ -83,7 +96,7 @@ RSpec.describe ParticipantsController, type: :controller do
           gender: nil
           ) }
         expect(@participant.first_name).to_not eq("Martha")
-        expect(@participant.gender).to eq("F")
+        expect(@participant.gender).to eq("M")
       end
     end
   end

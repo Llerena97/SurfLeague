@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe TournamentsController, type: :controller do
 
+  let!(:category) { create(:category) }
+
   describe 'GET #new' do
     it "assigns a new Tournament to @tournament" do
       get :new
@@ -16,13 +18,13 @@ RSpec.describe TournamentsController, type: :controller do
 
   describe 'GET #edit' do
     it "assigns the requested tournament to @tournament" do
-      tournament = create(:tournament)
+      tournament = create(:tournament, tournament_categories_attributes: [{category_id: category.id, participants_per_group: 4}])
       get :edit, params: { id: tournament }
       expect(assigns(:tournament)).to eq(tournament)
     end
 
     it "render the :edit template" do
-      tournament = create(:tournament)
+      tournament = create(:tournament, tournament_categories_attributes: [{category_id: category.id, participants_per_group: 4}])
       get :edit, params: { id: tournament }
       expect(response).to render_template :edit
     end
@@ -32,13 +34,13 @@ RSpec.describe TournamentsController, type: :controller do
     context "with valid attributes" do
       it "saves new tournament" do
         expect{
-          post :create, params: { tournament: attributes_for(:tournament) }
+          post :create, params: { tournament: attributes_for(:tournament, tournament_categories_attributes: [{category_id: category.id, participants_per_group: 4}]) }
         }.to change(Tournament, :count).by(1)
       end
 
-      it "redirects to root_path" do
-        post :create, params: { tournament: attributes_for(:tournament) }
-        expect(response).to redirect_to root_path
+      it "redirects to tournament" do
+        post :create, params: { tournament: attributes_for(:tournament, tournament_categories_attributes: [{category_id: category.id, participants_per_group: 4}]) }
+        expect(response).to redirect_to tournament_path(assigns(:tournament))
       end
     end
 
@@ -49,7 +51,7 @@ RSpec.describe TournamentsController, type: :controller do
         }.to_not change(Tournament, :count)
       end
 
-      it "render #new" do
+      it "renders #new" do
         post :create, params: { tournament: {name: "invalid_tournament"} }
         expect(response).to render_template :new
       end
@@ -60,7 +62,8 @@ RSpec.describe TournamentsController, type: :controller do
     before :each do
       @tournament = create(:tournament,
         name: "Koombea Games",
-        place: "Koombea SAS"
+        place: "Koombea SAS",
+        tournament_categories_attributes: [{category_id: category.id, participants_per_group: 4}]
         )
     end
 
@@ -70,9 +73,9 @@ RSpec.describe TournamentsController, type: :controller do
         expect(assigns(:tournament)).to eq(@tournament)
       end
 
-      it "redirects to root_path" do
+      it "redirects to tournament" do
         patch :update, params: { id: @tournament, tournament: attributes_for(:tournament) }
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to @tournament
       end
     end
 
