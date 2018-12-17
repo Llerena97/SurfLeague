@@ -1,5 +1,6 @@
 class TournamentsController < ApplicationController
   before_action :set_tournament, only: [:show, :edit, :update]
+  load_and_authorize_resource
 
   def index
     @tournaments = Tournament.all

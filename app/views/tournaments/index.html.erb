@@ -1,5 +1,5 @@
 <h4>Tournaments</h4>
-<%= link_to "New Tournament", new_tournament_path, class: "btn btn-success" %>
+<%= link_to "New Tournament", new_tournament_path, class: "btn btn-success" if can? :new, @tournament %>
 
 <div class="row">
   <div class="col-xs-6">

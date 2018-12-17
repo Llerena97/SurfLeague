@@ -1,0 +1,51 @@
+<%= form_for(@score, url: tournament_group_scores_path) do |f| %>
+  <% @score.errors.full_messages.each do |message| %>
+    <div class="alert alert-danger alert-dismissible w-75" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <%= message %>
+    </div>
+  <% end %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Participants</th>
+        <th>Wave 1</th>
+        <th>Wave 2</th>
+        <th>Wave 3</th>
+        <th>Wave 4</th>
+        <th>Wave 5</th>
+        <th>Wave 6</th>
+        <th>Wave 7</th>
+        <th>Wave 8</th>
+        <th>Wave 9</th>
+        <th>Wave 10</th>
+        <th>Final</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% @group.participants.each do |participant| %>
+          <tr>
+            <td><%= participant.first_name %> <%= participant.last_name %></td>
+            <td> <input type="text" name="score[waves][0]" style="width: 35px;"> </td>
+            <td> <input type="text" name="score[waves][1]" style="width: 35px;"> </td>
+            <td> <input type="text" name="score[waves][2]" style="width: 35px;"> </td>
+            <td> <input type="text" name="score[waves][3]" style="width: 35px;"> </td>
+            <td> <input type="text" name="score[waves][4]" style="width: 35px;"> </td>
+            <td> <input type="text" name="score[waves][5]" style="width: 35px;"> </td>
+            <td> <input type="text" name="score[waves][6]" style="width: 35px;"> </td>
+            <td> <input type="text" name="score[waves][7]" style="width: 35px;"> </td>
+            <td> <input type="text" name="score[waves][8]" style="width: 35px;"> </td>
+            <td> <input type="text" name="score[waves][9]" style="width: 35px;"> </td>
+            <td> <input disabled type="text" name="score[waves][10]" style="width: 35px;"> </td>
+          </tr>
+          <%= f.fields_for :participant_scores do |p_s| %>
+            <%= p_s.hidden_field :user_id, value: current_user.id %>
+            <%= p_s.hidden_field :group_id, value: @group.id %>
+            <%= p_s.hidden_field :participant_id, value: participant.id %>
+            <%= p_s.hidden_field :score_id, value: @score.id %>
+          <% end %>
+        <% end %>
+        <%= f.submit "Finish", class:"pull-right btn btn-success"%>
+    </tbody>
+  </table>
+<% end %>

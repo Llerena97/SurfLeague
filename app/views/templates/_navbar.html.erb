@@ -7,7 +7,16 @@
         </div>
       </a>
     </div>
-    <div class="navbar-content clearfix">          
+    <div class="navbar-content clearfix">
+      <div class="pull-right">
+        <% if user_signed_in? %>
+          <button class="btn btn-info"><%= current_user.first_name %> <%= current_user.last_name %></button>
+          <button class="btn btn-info"><%= current_user.role %></button>
+          <%= link_to "Log out", destroy_user_session_path, method: :delete, data: { confirm: "Are you sure" }, class: "btn btn-danger" %>
+        <% else %>
+          <%= link_to "Log in", new_user_session_path, class: "btn btn-success" %>
+        <% end %>
+      </div>       
     </div>
   </div>
 </header>

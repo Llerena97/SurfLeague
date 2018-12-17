@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:update]
+  load_and_authorize_resource
 
   def create
     @category = Category.new(category_params)

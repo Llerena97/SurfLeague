@@ -1,5 +1,5 @@
 <h4>Participants</h4>
-<%= link_to "New Participant", new_participant_path, class: "btn btn-success" %>
+<%= link_to "New Participant", new_participant_path, class: "btn btn-success" if can? :new, @participant %>
 
 <table class="table table-hover">
   <thead>
@@ -16,7 +16,7 @@
       <td><%= participant.first_name %> <%= participant.last_name %></td>
       <td><%= participant.gender %></td>
       <td><%= participant.categories.map(&:name).split(" ").join(", ") %></td>
-      <td><%= link_to "Edit participant", edit_participant_path(participant), class: "btn btn-info btn-xs" %> <%= link_to "Delete participant", participant , method: :delete, data: { confirm: "Are you sure? "}, class: "btn btn-danger btn-xs" %></td>
+      <td><%= link_to "Edit participant", edit_participant_path(participant), class: "btn btn-info btn-xs" if can? :edit, @participant %> <%= link_to "Delete participant", participant , method: :delete, data: { confirm: "Are you sure? "}, class: "btn btn-danger btn-xs" if can? :destroy, @participant %></td>
     </tr>
     <% end %>
   </tbody>

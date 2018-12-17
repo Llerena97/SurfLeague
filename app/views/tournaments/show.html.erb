@@ -1,6 +1,6 @@
 <h2><%= @tournament.name %></h2>
-<%= link_to "Edit", edit_tournament_path, class: "btn btn-success btn-xs" %>
-<%= link_to "Draw", new_tournament_group_path(@tournament), class: "btn btn-success btn-xs" %>
+<%= link_to "Edit", edit_tournament_path, class: "btn btn-success btn-xs" if can? :edit, @tournament %>
+<%= link_to "Draw", new_tournament_group_path(@tournament), class: "btn btn-success btn-xs" if can? :new, @group %>
 <div class="row">
   <% @tournament.groups.group_by { |t| t.category }.each do |category, groups| %>
     <div class="col-xs-4">
@@ -17,7 +17,7 @@
             </ul>
           </div>
           <div class="panel-footer">
-            <%= link_to "Qualify", {}, class: "btn btn-success btn-xs" %>            
+            <%= link_to "Qualify", new_tournament_group_score_path(@tournament, group), class: "btn btn-success btn-xs" if can? :new, @score %>
           </div>
         </div>
       <% end %>

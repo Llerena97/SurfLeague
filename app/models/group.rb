@@ -3,6 +3,7 @@ class Group < ApplicationRecord
   belongs_to :category
   has_many :group_participants
   has_many :participants, through: :group_participants
+  has_many :participant_scores
   validates :name, :phase, :category_id, :group_participants, presence: true
   accepts_nested_attributes_for :group_participants, reject_if: :all_blank, allow_destroy: true
 

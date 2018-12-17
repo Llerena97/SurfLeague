@@ -13,6 +13,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'cocoon', '~> 1.2', '>= 1.2.12'
 gem 'jquery-rails', '~> 4.3', '>= 4.3.1'
 gem 'sass-rails', '>= 3.2'
+gem 'devise', '~> 4.5'
+gem 'cancancan', '~> 2.3'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

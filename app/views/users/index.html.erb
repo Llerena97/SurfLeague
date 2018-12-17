@@ -1,0 +1,21 @@
+<h4>Judges</h4>
+<%= link_to "New Judge", new_user_path, class: "btn btn-success" if can? :new, @user %>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th colspan="2">Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.first_name %> <%= user.last_name %></td>
+      <td><%= user.email %></td>
+      <td><%= link_to "Edit judge", edit_user_path(user), class: "btn btn-info btn-xs" if can? :edit, @user %> <%= link_to "Delete judge", user , method: :delete, data: { confirm: "Are you sure? "}, class: "btn btn-danger btn-xs" if can? :destroy, @user %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,4 +1,5 @@
 FactoryBot.define do
+
   factory :tournament do
     name { "Tournament" }
     place { "Whatever place" }

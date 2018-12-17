@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
   before_action :set_aux_vars
   before_action :get_participants, only: [:new, :create]
+  load_and_authorize_resource
 
   def new
     @group = @tournament.groups.build
