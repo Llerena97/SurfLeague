@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: [:edit, :update]
+  before_action :set_tournament, only: [:show, :edit, :update]
 
   def index
     @tournaments = Tournament.all
@@ -12,7 +12,7 @@ class TournamentsController < ApplicationController
   def create
     @tournament = Tournament.new(tournament_params)
     if @tournament.save
-      redirect_to root_path
+      redirect_to @tournament
     else
       render 'new'
     end
@@ -20,7 +20,7 @@ class TournamentsController < ApplicationController
 
   def update
     if @tournament.update(tournament_params)
-      redirect_to root_path
+      redirect_to @tournament
     else
       render :edit
     end
