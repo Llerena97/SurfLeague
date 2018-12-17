@@ -27,5 +27,18 @@ RSpec.describe GroupsController, type: :controller do
           participant_ids: [participants.first.id, participants.last.id]) }
       }.to change(Group, :count).by(1)
     end
+
+    it "doesn't saves in group without participants" do
+      expect{
+        post :create, params: { tournament_id: tournament.id, group: attributes_for(:group, category_id: category.id) }
+      }.to_not change(Group, :count)
+    end
+
+    it "doesn't create group with invalid participants number" do
+      expect{
+        post :create, params: { tournament_id: tournament.id, group: attributes_for(:group, category_id: category.id, 
+          participant_ids: [participants.first.id, participants.second.id, participants.last.id]) }
+      }.to_not change(Group, :count)
+    end
   end
 end

@@ -3,45 +3,48 @@ require 'rails_helper'
 RSpec.describe Group, type: :model do
   describe Group do
     let!(:category) { create(:category) }
-    let(:participants) { create_list(:participant, 10, participant_categories_attributes: [{category_id: category.id}]) }
-
-    before :each do
-      @tournament = Tournament.create(
-        name: "Test name",
-        place: "Test place",
-        initial_date: Date.today,
-        finish_date: Date.today + 2.days,
-        tournament_categories_attributes: [{category_id: category.id, participants_per_group: 2}]
-        )
+    let(:participants) { create_list(:participant, 3, participant_categories_attributes: [{category_id: category.id}]) }
+    let(:tournament) do
+      create(:tournament,
+        tournament_categories_attributes: [{category_id: category.id, participants_per_group: 3}]
+      )
     end
-
-    it "returns valid with all presence fields" do
-      group = @tournament.groups.new(
+    let(:attributes_without_participants) do
+      {
         name: "Group A",
         phase: 1,
         category_id: category.id,
-        participant_ids: [participants.first.id, participants.last.id]
-        )
-      expect(group).to be_valid
+      }
+    end
+    let(:valid_attributes) do
+      attributes_without_participants.merge({ participant_ids: [participants.first.id, participants.second.id, participants.last.id] })
+    end
+    let(:attributes_invalid_participants_numbers) do
+      attributes_without_participants.merge({ participant_ids: [participants.first.id, participants.last.id] })
     end
 
-    it "returns invalid without participants" do
-      group = @tournament.groups.new(
-        name: "Group A",
-        phase: 1,
-        category_id: category.id,
-        )
-      expect(group).to_not be_valid
+    context 'when group is valid' do
+      it "returns valid with all presence fields" do
+        expect(tournament.groups.new(valid_attributes)).to be_valid
+      end
     end
 
-    it "returns invalid without a group name and phase" do
-      group = @tournament.groups.new(
-        name: "",
-        phase: 0,
-        category_id: category.id,
-        participant_ids: [participants.first.id, participants.last.id]
-        )
-      expect(group).to_not be_valid
+    context 'when group is invalid' do
+      let(:attributes_without_phase_name) do
+        valid_attributes.merge({ name: "", phase: 0 })
+      end
+
+      it "returns invalid without participants" do
+        expect(tournament.groups.new(attributes_without_participants)).to_not be_valid
+      end
+
+      it "returns invalid without a group name and phase" do
+        expect(tournament.groups.new(attributes_without_phase_name)).to_not be_valid
+      end
+
+      it "returns invalid participants number" do
+        expect(tournament.groups.new(attributes_invalid_participants_numbers)).to_not be_valid
+      end
     end
 
   end
