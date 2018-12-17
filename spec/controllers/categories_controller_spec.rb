@@ -26,32 +26,28 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe "PATCH #update" do
-    before :each do
-      @category = create(:category,
-        name: "Open board",
-        )
-    end
+    context "with valid parameters" do
+      let(:category){ create(:category, name: "Open board") }
+      context "valid attributes" do
+        it "updated category name" do
+          patch :update, params: { id: category, category: attributes_for(:category) }
+          expect(assigns(:category)).to eq(category)
+        end
 
-    context "valid attributes" do
-      it "updated category name" do
-        patch :update, params: { id: @category, category: attributes_for(:category) }
-        expect(assigns(:category)).to eq(@category)
+        it "redirects to root_path" do
+          patch :update, params: { id: category, category: attributes_for(:category) }
+          expect(response).to redirect_to root_path
+        end
       end
 
-      it "redirects to root_path" do
-        patch :update, params: { id: @category, category: attributes_for(:category) }
-        expect(response).to redirect_to root_path
-      end
-    end
-
-    context "with invalid attributes" do
-      it "does not change the category's attributes" do
-        patch :update, params: { id: @category, category: attributes_for(:category,
-          name: "Open board",
-          ) }
-        expect(@category.name).to eq("Open board")
+      context "with invalid attributes" do
+        it "does not change the category's attributes" do
+          patch :update, params: { id: category, category: attributes_for(:category,
+            name: "Open board",
+            ) }
+          expect(category.name).to eq("Open board")
+        end
       end
     end
   end
-
 end

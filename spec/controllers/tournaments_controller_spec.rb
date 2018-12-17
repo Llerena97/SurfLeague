@@ -59,36 +59,31 @@ RSpec.describe TournamentsController, type: :controller do
   end
 
   describe "PATCH #update" do
-    before :each do
-      @tournament = create(:tournament,
-        name: "Koombea Games",
-        place: "Koombea SAS",
-        tournament_categories_attributes: [{category_id: category.id, participants_per_group: 4}]
-        )
-    end
+    context "with valid parameters" do
+      let(:tournament) { create(:tournament, name: "Koombea Games", place: "Koombea SAS", 
+        tournament_categories_attributes: [{category_id: category.id, participants_per_group: 4}]) }
+      context "valid attributes" do
+        it "updated tournament name" do
+          patch :update, params: { id: tournament, tournament: attributes_for(:tournament) }
+          expect(assigns(:tournament)).to eq(tournament)
+        end
 
-    context "valid attributes" do
-      it "updated tournament name" do
-        patch :update, params: { id: @tournament, tournament: attributes_for(:tournament) }
-        expect(assigns(:tournament)).to eq(@tournament)
+        it "redirects to tournament" do
+          patch :update, params: { id: tournament, tournament: attributes_for(:tournament) }
+          expect(response).to redirect_to tournament
+        end
       end
 
-      it "redirects to tournament" do
-        patch :update, params: { id: @tournament, tournament: attributes_for(:tournament) }
-        expect(response).to redirect_to @tournament
-      end
-    end
-
-    context "with invalid attributes" do
-      it "does not change the tournament's attributes" do
-        patch :update, params: { id: @tournament, tournament: attributes_for(:tournament,
-          name: "PES",
-          place: nil
-          ) }
-        expect(@tournament.name).to_not eq("PES")
-        expect(@tournament.place).to eq("Koombea SAS")
+      context "with invalid attributes" do
+        it "does not change the tournament's attributes" do
+          patch :update, params: { id: tournament, tournament: attributes_for(:tournament,
+            name: "PES",
+            place: nil
+            ) }
+          expect(tournament.name).to_not eq("PES")
+          expect(tournament.place).to eq("Koombea SAS")
+        end
       end
     end
   end
-
 end

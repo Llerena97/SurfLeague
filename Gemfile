@@ -12,7 +12,6 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'cocoon', '~> 1.2', '>= 1.2.12'
 gem 'jquery-rails', '~> 4.3', '>= 4.3.1'
-gem 'bootstrap-sass', '~> 3.3.7'
 gem 'sass-rails', '>= 3.2'
 
 group :development, :test do

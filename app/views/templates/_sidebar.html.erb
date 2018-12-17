@@ -1,9 +1,23 @@
-<nav class="navbar navbar-default navbar-fixed-left">
-  <div class="container">
-    <ul class="navbar">
-      <li class="navbar-btn" style="list-style:none;"><%= link_to "Tournaments", root_path, class: "btn btn-default" %></li>
-      <li class="navbar-btn" style="list-style:none;"><%= link_to "Participants", participants_path, class: "btn btn-default" %></li>
-      <li class="navbar-btn" style="list-style:none;"><a class="btn btn-default" href="">Judges</a></li> 
-    </ul>
+<nav id="mainnav-container">
+  <div id="mainnav">
+    <div id="mainnav-shortcut">
+    </div>
+    <div id="mainnav-menu-wrap">
+      <div class="nano">
+        <div class="nano-content">
+          <ul id="mainnav-menu" class="list-group">                 
+            <li>
+              <%= link_to 'Tournaments', root_path, class: "fa fa-dashboard" %>
+            </li>
+            <li>
+              <%= link_to 'Participants', participants_path, class: "fa fa-dashboard" %>
+            </li>
+            <li>
+              <%= link_to 'Judges', {}, class: "fa fa-dashboard" %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>

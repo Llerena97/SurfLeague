@@ -15,7 +15,7 @@
     <tr>
       <td><%= participant.first_name %> <%= participant.last_name %></td>
       <td><%= participant.gender %></td>
-      <td><%= participant.categories.map(&:name) %></td>
+      <td><%= participant.categories.map(&:name).split(" ").join(", ") %></td>
       <td><%= link_to "Edit participant", edit_participant_path(participant), class: "btn btn-info btn-xs" %> <%= link_to "Delete participant", participant , method: :delete, data: { confirm: "Are you sure? "}, class: "btn btn-danger btn-xs" %></td>
     </tr>
     <% end %>

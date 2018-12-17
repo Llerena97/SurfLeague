@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe GroupsController, type: :controller do
   let!(:category) { create(:category) }
-  let(:tournament) { create(:tournament, tournament_categories_attributes: [{category_id: category.id, participants_per_group: 4}]) }
+  let(:tournament) { create(:tournament, tournament_categories_attributes: [{category_id: category.id, participants_per_group: 2}]) }
   let(:participants) { create_list(:participant, 10, participant_categories_attributes: [{category_id: category.id}]) }
 
   describe 'GET #new' do
@@ -27,12 +27,5 @@ RSpec.describe GroupsController, type: :controller do
           participant_ids: [participants.first.id, participants.last.id]) }
       }.to change(Group, :count).by(1)
     end
-
-    it "doesn't save group without participants" do
-      expect{
-        post :create, params: { tournament_id: tournament.id, group: attributes_for(:group, category_id: category.id, 
-          category_groups_attributes: [{category_id: category.id, participants_per_group: 4}]) }
-      }.to_not change(Group, :count)
-    end  
   end
 end

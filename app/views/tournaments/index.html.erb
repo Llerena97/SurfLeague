@@ -8,7 +8,7 @@
         <div class="panel-heading"><h3><%= tournament.name %></h3></div>
         <div class="panel-body">
           <h5>Place: <%= tournament.place %></h5>
-          <h6>Categories: <%= tournament.categories.map(&:name).to_s %></h6>
+          <h6>Categories: <%= tournament.categories.map(&:name).split(" ").join(", ") %></h6>
         </div>
         <div class="panel-footer">
           <h6>Date: <%= tournament.initial_date %> / <%= tournament.finish_date %></h6>
